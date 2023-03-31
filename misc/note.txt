@@ -1,0 +1,50 @@
+self.__DictBoard = {
+    8: {"A": None, "B": None, "C": None, "D": None, "E": None, "F": None, "G": None, "H": None},
+    7: {"A": None, "B": None, "C": None, "D": None, "E": None, "F": None, "G": None, "H": None},
+    6: {"A": None, "B": None, "C": None, "D": None, "E": None, "F": None, "G": None, "H": None},
+    5: {"A": None, "B": None, "C": None, "D": None, "E": None, "F": None, "G": None, "H": None},
+    4: {"A": None, "B": None, "C": None, "D": None, "E": None, "F": None, "G": None, "H": None},
+    3: {"A": None, "B": None, "C": None, "D": None, "E": None, "F": None, "G": None, "H": None},
+    2: {"A": None, "B": None, "C": None, "D": None, "E": None, "F": None, "G": None, "H": None},
+    1: {"A": None, "B": None, "C": None, "D": None, "E": None, "F": None, "G": None, "H": None}
+}
+
+add check after game has been finised
+
+
+NumY = "12345678"
+        LetterX = " ABCDEFGH"
+        for y in range(len(self.__board)):
+            print(f"{NumY[y]} | ", end="")
+            for x in range(len(self.__board)):
+                if self.__board[y][x] != None:
+                    print(f"{self.__board[y][x].lable} | ",end="")
+                else:
+                    print(f"{self.__board[y][x]} | ",end="")
+            print("")
+        print(" -- "*len(LetterX))
+        for char in LetterX:
+            print(f"{char}   |   ",end="")
+
+- Pygame
+--In board class, create main game loop with a turn counter in main loop which flips each turn
+
+--Move choosenpiece and MovePos to a player stored functiona and place if statement where
+    --if player.choosenPiece and player.MovePos != None:
+        --reset both to None
+        --increment turn
+
+ for player in Players:
+        Board.display()
+
+        print(f"\n {player.getColour()} Turn")
+        Valid = False
+        while not Valid: 
+            startPos = convertToCord(tuple(input("Enter Grid reference of piece to move (RowColumn): ")))
+            piece = Board.pieceAt(startPos)
+            if piece != None:
+                Valid = player.checkPiece(piece.getcolour())
+            else: print("No piece in this position")
+        
+        endPos = convertToCord(tuple(input("Enter Grid reference of piece destination (RowColumn): ")))
+        Board.movePiece(piece, startPos, endPos)
