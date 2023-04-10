@@ -28,6 +28,8 @@ NumY = "12345678"
 
 - Pygame
 --In board class, create main game loop with a turn counter in main loop which flips each turn
+-- Use vectors to movePieces
+    --Limit the directional vector.
 
 --Move choosenpiece and MovePos to a player stored functiona and place if statement where
     --if player.choosenPiece and player.MovePos != None:

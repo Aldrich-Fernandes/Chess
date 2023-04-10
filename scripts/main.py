@@ -28,6 +28,7 @@ while not Board.gameOver():
     screen.blit(background, (0,0))
 
     player = Players[turn % 2]
+    print(player)
     print(f"{player.getColour()}'s turn")
     Board.run(player)
     turn += 1
