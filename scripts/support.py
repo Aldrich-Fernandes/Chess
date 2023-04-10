@@ -1,6 +1,7 @@
 def getSquareCord(pos): 
     posX = (pos[0]//75)*75
     posY = (pos[1]//75)*75
+    print(f"Pos: {(posX, posY)}")
     return (posX, posY)
 
 def checkAtPos(pieceList, pos):
@@ -11,5 +12,5 @@ def checkAtPos(pieceList, pos):
 
 def getVector(pos, moveToPos):
     vector =  tuple(map(lambda x,y : abs(y-x), pos, moveToPos))
-    print(vector)
+    print(f"Vector: {vector}")
     return vector

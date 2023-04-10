@@ -61,8 +61,7 @@ class Board:
                         self.whitePieces.add(piece)
                     else:
                         self.blackPieces.add(piece)   
-
-    
+  
     def gameOver(self):
         return self.__gameOver
     

@@ -18,14 +18,15 @@ class Movement:
             if getVector(pos, moveToPos) in movelist:
                 return True
         elif Type == "H":
-            pass
+            movelist = [(75,150), (150, 75)]
+            if getVector(pos, moveToPos) in movelist:
+                return True
         
         return False
 
     @staticmethod
     def StraightMove(pos, moveToPos):  #Rook, Queen
         vectorX, vectorY = getVector(pos, moveToPos)
-        print(pos, (vectorX,vectorY))
         if vectorX == 0 or vectorY == 0:
             return True
         
