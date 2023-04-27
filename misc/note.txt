@@ -1,52 +1,26 @@
-self.__DictBoard = {
-    8: {"A": None, "B": None, "C": None, "D": None, "E": None, "F": None, "G": None, "H": None},
-    7: {"A": None, "B": None, "C": None, "D": None, "E": None, "F": None, "G": None, "H": None},
-    6: {"A": None, "B": None, "C": None, "D": None, "E": None, "F": None, "G": None, "H": None},
-    5: {"A": None, "B": None, "C": None, "D": None, "E": None, "F": None, "G": None, "H": None},
-    4: {"A": None, "B": None, "C": None, "D": None, "E": None, "F": None, "G": None, "H": None},
-    3: {"A": None, "B": None, "C": None, "D": None, "E": None, "F": None, "G": None, "H": None},
-    2: {"A": None, "B": None, "C": None, "D": None, "E": None, "F": None, "G": None, "H": None},
-    1: {"A": None, "B": None, "C": None, "D": None, "E": None, "F": None, "G": None, "H": None}
-}
+--> Add InvalidMove is another piece in the way of 
+    --add vector to pos untill moveTo pos (return a test vector and a real vector)
+        -- test vector: used to check if it is a valid move
+        -- apply vector: applied to the pos to check if there will be a collision in the path
+            -- allow if the final pos is a collison with the enemy (take piece)
 
-add check after game has been finised
-
-
-NumY = "12345678"
-        LetterX = " ABCDEFGH"
-        for y in range(len(self.__board)):
-            print(f"{NumY[y]} | ", end="")
-            for x in range(len(self.__board)):
-                if self.__board[y][x] != None:
-                    print(f"{self.__board[y][x].lable} | ",end="")
-                else:
-                    print(f"{self.__board[y][x]} | ",end="")
-            print("")
-        print(" -- "*len(LetterX))
-        for char in LetterX:
-            print(f"{char}   |   ",end="")
-
-- Pygame
---In board class, create main game loop with a turn counter in main loop which flips each turn
--- Use vectors to movePieces
-    --Limit the directional vector.
-
---Move choosenpiece and MovePos to a player stored functiona and place if statement where
-    --if player.choosenPiece and player.MovePos != None:
-        --reset both to None
-        --increment turn
-
- for player in Players:
-        Board.display()
-
-        print(f"\n {player.getColour()} Turn")
-        Valid = False
-        while not Valid: 
-            startPos = convertToCord(tuple(input("Enter Grid reference of piece to move (RowColumn): ")))
-            piece = Board.pieceAt(startPos)
-            if piece != None:
-                Valid = player.checkPiece(piece.getcolour())
-            else: print("No piece in this position")
+--> Pawn Move:
+    -- Killing
         
-        endPos = convertToCord(tuple(input("Enter Grid reference of piece destination (RowColumn): ")))
-        Board.movePiece(piece, startPos, endPos)
+    -- Pawn Boost (start can move 2 places)
+    -- Upgrading
+
+--> Winning the match (just have the king die) ie kill the king for checkmate
+
+--> add special moves 
+    -- Kills for Pawn 
+    -- Castling (test that it is in the starting rows and points)
+    
+
+################################################################################################
+
+SCRAP PROJECT AND START AGAIN
+--> KEEP TRACK OF THE BOARDSTATE
+--> WHEN CHOOSING PIECE GET THE SQUARE COORDS AS A TUPLE OF (0-7)
+    --> WHEN SELLECTIVE THE SQUARE GET 75 MULTIPLE POS THEN FIND QUOTION TO GET SQUARE NUMB
+    --> WHEN DISPLAYING MULTIPLE THE POS TUPLE BY 75 TO RENDER

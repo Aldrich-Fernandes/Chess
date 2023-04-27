@@ -1,6 +1,6 @@
 from piece import *
-from support import getSquareCord, checkAtPos
 import pygame, sys
+
 
 class Board:
     def __init__(self, screen):
@@ -8,10 +8,48 @@ class Board:
 
         self.blackPieces = pygame.sprite.Group()
         self.whitePieces = pygame.sprite.Group()
+        self.allPieces = pygame.sprite.Group()
+
         self.__setUp()
         self.screen = screen
 
+    #SUPPORT METHODS        
+    def getSquareCord(self, pos): 
+        posX = (pos[0]//75)*75
+        posY = (pos[1]//75)*75
+        return (posX, posY)
 
+    def checkAtPos(self, pieceList, pos):
+        for piece in pieceList:
+            if piece.getPos() == pos:
+                return True
+        return False
+    
+    def getDirectionalVector(self, TrueVector):
+        dirX = TrueVector[0]
+        dirY = TrueVector[1]
+
+        x,y = 0,0
+        if dirX < 0:
+            x = -75
+        elif dirX > 0:
+            x = 75
+        if dirY < 0:
+            y = -75
+        elif dirY > 0:
+            y = 75
+        
+        return x,y
+
+    def getVector(self, pos, moveToPos):
+        TestVector = tuple(map(lambda x,y : abs(y-x), pos, moveToPos)) # to check if in line with piece movment
+        TrueVector = tuple(map(lambda x,y : y-x, pos, moveToPos))
+        return TestVector, TrueVector
+
+    def addVectorToPos(self, pos, vector):
+        return tuple(map(lambda x,y : x+y, pos, vector))
+
+    #BOARD INTERACTIONS
     def __setUp(self): # sets up board with all piece in its staring position
         board = [
             ["r","h","b","q","k","b","h","r"],
@@ -60,17 +98,53 @@ class Board:
                     if piece.getcolour() == "White":
                         self.whitePieces.add(piece)
                     else:
-                        self.blackPieces.add(piece)   
+                        self.blackPieces.add(piece)
+                    self.allPieces.add(piece)
+        print(self.allPieces)
   
+    def validPath(self, pos, moveToPos, TrueVector):
+        print(TrueVector)
+        dirX, dirY = self.getDirectionalVector((TrueVector))
+        posX, posY = pos
+        Scaler = 1
+        
+        while (posX, posY) != moveToPos:
+            posX += dirX * Scaler
+            posY += dirY * Scaler
+            if (posX, posY) == moveToPos:
+                return True
+                
+            if self.checkAtPos(self.allPieces, (posX, posY)):
+                return False
+            else:
+                Scaler += 1
+        return True
+            
     def gameOver(self):
         return self.__gameOver
     
-    def __takePiece(): # Displays a message if a piece is taken (gameOver = True if king is taken)
-        pass
+    def __takePiece(self, colour, pos): # Displays a message if a piece is taken (gameOver = True if king is taken)
+        if colour == "White":
+            if self.checkAtPos(self.blackPieces, pos):
+                for piece in self.blackPieces:
+                    if piece.getPos() == pos:
+                        piece.kill()
+                        return None
+            else:
+                return None
+        else:
+            if self.checkAtPos(self.whitePieces, pos):
+                for piece in self.whitePieces:
+                    if piece.getPos() == pos:
+                        piece.kill()
+                        return None
+            else:
+                return None
 
     def __upgradePiece(): # replaces the pawn with a queen.
         pass
 
+    #MOVING PIECES
     def getChoosenPiece(self, player, pieceList):
         choosenPiece = None
         while choosenPiece == None:
@@ -80,7 +154,7 @@ class Board:
                     sys.exit()
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    pos = getSquareCord(pygame.mouse.get_pos())
+                    pos = self.getSquareCord(pygame.mouse.get_pos())
                     choosenPiece = player.choosePiece(pos, pieceList)
         return choosenPiece
     
@@ -89,17 +163,25 @@ class Board:
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    moveToPos = getSquareCord(pygame.mouse.get_pos())
-                    if not checkAtPos(pieceList, moveToPos): # check if own piece at the pos
-                        if choosenPiece.validMove(moveToPos): # checks if the piece is able to move to the position
-                            return moveToPos
+                    moveToPos = self.getSquareCord(pygame.mouse.get_pos())
+                    TestVector, TrueVector = self.getVector(choosenPiece.getPos(), moveToPos)
+                    print(f"\nMoveToPos: {moveToPos}\nTest: {TestVector}\nTrue:{TrueVector}")
+
+                    if not self.checkAtPos(pieceList, moveToPos): # check if own piece at the pos
+                        if choosenPiece.validMove(TestVector, TrueVector): # checks if the piece is able to move to the position
+                            if self.validPath(choosenPiece.getPos(), moveToPos, (TrueVector)):
+                                return moveToPos
+                            else:
+                                print("Another piece in the way")
+                                return None
                         else:
                             print("Invalid square")
                             return None
                     else:
                         print("Square occupied")
                         return None
-           
+
+    #MAIN GAME LOOP
     def run(self, player):
         self.whitePieces.draw(self.screen)
         self.blackPieces.draw(self.screen)
@@ -114,10 +196,7 @@ class Board:
 
         while choosenPiece == None or moveToPos == None:
             choosenPiece = self.getChoosenPiece(player, pieceList) #chooses only your own piece
-            moveToPos = self.getMoveTo(choosenPiece, pieceList)#pos that  is not on own piece 
+            moveToPos = self.getMoveTo(choosenPiece, pieceList)#pos that  is not on own piece and is a valid move
         choosenPiece.updatePos(moveToPos)
-        
-        
-                
 
-
+        self.__takePiece(player.getColour(), moveToPos)

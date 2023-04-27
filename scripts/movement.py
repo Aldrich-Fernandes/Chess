@@ -1,41 +1,34 @@
-import pygame
-from support import getVector
-
 class Movement:
-
     @staticmethod
-    def BasicMove(pos, moveToPos, Type, colour): # Pawn, King, Horse
+    def BasicMove(Type, colour, TestVector, TrueVector): # Pawn, King, Horse
         if Type == "P":
             if colour == "White":
                 movelist = (0,-75)
-            else: movelist = (0,75)
-
-            vector = tuple(map(lambda x,y : y-x, pos, moveToPos))
-            if vector == movelist:
-                return True
+            else: 
+                movelist = (0,75)
+            if TrueVector == movelist:
+                return True # Add kill move later when bothered
         elif Type == "K":
             movelist = [(75,75), (75,0), (0, 75)]
-            if getVector(pos, moveToPos) in movelist:
+            if TestVector in movelist:
                 return True
         elif Type == "H":
             movelist = [(75,150), (150, 75)]
-            if getVector(pos, moveToPos) in movelist:
+            if TestVector in movelist:
                 return True
         
         return False
 
     @staticmethod
-    def StraightMove(pos, moveToPos):  #Rook, Queen
-        vectorX, vectorY = getVector(pos, moveToPos)
-        if vectorX == 0 or vectorY == 0:
-            return True
+    def StraightMove(TestVector):  #Rook, Queen
+        if TestVector[0] == 0 or TestVector[1] == 0:
+            return True              
         
         return False
 
     @staticmethod
-    def DiagonalMove(pos, moveToPos): # Bishop, Queen
-        vectorX, vectorY = getVector(pos, moveToPos)
-        if vectorX == vectorY:
+    def DiagonalMove(TestVector): # Bishop, Queen
+        if TestVector[0] == TestVector[1]:
             return True
         
         return False

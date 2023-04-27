@@ -2,7 +2,6 @@ import pygame, sys
 from board import Board
 from player import Player
 
-
 pygame.init()
 Clock = pygame.time.Clock()
 
@@ -28,9 +27,7 @@ while not Board.gameOver():
     screen.blit(background, (0,0))
 
     player = Players[turn % 2]
-    print(player)
     print(f"{player.getColour()}'s turn")
     Board.run(player)
     turn += 1
-
     Clock.tick(60)

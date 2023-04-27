@@ -1,6 +1,3 @@
-import pygame
-from board import Board
-    
 class Player():
     def __init__(self, colour): 
         self._colour = colour # "black" or "white"
