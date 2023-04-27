@@ -128,6 +128,8 @@ class Board:
             if self.checkAtPos(self.blackPieces, pos):
                 for piece in self.blackPieces:
                     if piece.getPos() == pos:
+                        if piece.Type == "K":
+                            self.__gameOver = True
                         piece.kill()
                         return None
             else:
@@ -136,6 +138,8 @@ class Board:
             if self.checkAtPos(self.whitePieces, pos):
                 for piece in self.whitePieces:
                     if piece.getPos() == pos:
+                        if piece.Type == "K":
+                            self.__gameOver = True
                         piece.kill()
                         return None
             else:
