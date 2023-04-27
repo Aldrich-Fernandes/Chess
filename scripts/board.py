@@ -110,13 +110,11 @@ class Board:
   
     def validPath(self, PiecePos, moveToPos, TrueVector):
         dirX, dirY = self.getDirectionalVector((TrueVector))
-        print(dirX, dirY)
         posX, posY = PiecePos
         
         while (posX, posY) != moveToPos: # infinite loop breaks game
             posX += dirX 
             posY += dirY 
-            print("Here 3")
             if (posX, posY) == moveToPos or self.isHorse(PiecePos):
                 return True
                 
@@ -177,9 +175,7 @@ class Board:
 
                     if not self.checkAtPos(pieceList, moveToPos): # check if own piece at the pos
                         if choosenPiece.validMove(TestVector, TrueVector): # checks if the piece is able to move to the position
-                            print("Here 1: ", choosenPiece.getPos(), moveToPos, TrueVector)
                             if self.validPath(choosenPiece.getPos(), moveToPos, TrueVector):
-                                print("Here 2")
                                 return moveToPos
                             else:
                                 print("Another piece in the way")
