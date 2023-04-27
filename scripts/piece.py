@@ -25,9 +25,6 @@ class Piece(pygame.sprite.Sprite):
     def validMove(self, TestVector, TrueVector): # tests if tile is valid 
         return False
     
-    
-
-
 class Pawn(Piece):    
     def __init__(self, colour, pos, path, Type):
         super().__init__(colour, pos, path)

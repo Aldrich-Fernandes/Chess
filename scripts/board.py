@@ -100,24 +100,23 @@ class Board:
                     else:
                         self.blackPieces.add(piece)
                     self.allPieces.add(piece)
-        print(self.allPieces)
   
-    def validPath(self, pos, moveToPos, TrueVector):
-        print(TrueVector)
+    def validPath(self, PiecePos, moveToPos, TrueVector):
         dirX, dirY = self.getDirectionalVector((TrueVector))
-        posX, posY = pos
-        Scaler = 1
+        print(dirX, dirY)
+        posX, posY = PiecePos
         
-        while (posX, posY) != moveToPos:
-            posX += dirX * Scaler
-            posY += dirY * Scaler
+        while (posX, posY) != moveToPos: # infinite loop breaks game
+            posX += dirX 
+            posY += dirY 
+            print("Here 3")
             if (posX, posY) == moveToPos:
+                print("At location")
                 return True
                 
             if self.checkAtPos(self.allPieces, (posX, posY)):
+                print("Obsticle")
                 return False
-            else:
-                Scaler += 1
         return True
             
     def gameOver(self):
@@ -169,11 +168,12 @@ class Board:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     moveToPos = self.getSquareCord(pygame.mouse.get_pos())
                     TestVector, TrueVector = self.getVector(choosenPiece.getPos(), moveToPos)
-                    print(f"\nMoveToPos: {moveToPos}\nTest: {TestVector}\nTrue:{TrueVector}")
 
                     if not self.checkAtPos(pieceList, moveToPos): # check if own piece at the pos
                         if choosenPiece.validMove(TestVector, TrueVector): # checks if the piece is able to move to the position
-                            if self.validPath(choosenPiece.getPos(), moveToPos, (TrueVector)):
+                            print("Here 1: ", choosenPiece.getPos(), moveToPos, TrueVector)
+                            if self.validPath(choosenPiece.getPos(), moveToPos, TrueVector):
+                                print("Here 2")
                                 return moveToPos
                             else:
                                 print("Another piece in the way")
