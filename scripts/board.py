@@ -24,6 +24,13 @@ class Board:
             if piece.getPos() == pos:
                 return True
         return False
+
+    def isHorse(self, pos):
+        for piece in self.allPieces:
+            if piece.getPos() == pos:
+                if piece.Type == "H":
+                    return True
+        return False
     
     def getDirectionalVector(self, TrueVector):
         dirX = TrueVector[0]
@@ -110,11 +117,10 @@ class Board:
             posX += dirX 
             posY += dirY 
             print("Here 3")
-            if (posX, posY) == moveToPos:
-                print("At location")
+            if (posX, posY) == moveToPos or self.isHorse(PiecePos):
                 return True
                 
-            if self.checkAtPos(self.allPieces, (posX, posY)):
+            if self.checkAtPos(self.allPieces, (posX, posY)): # and check if type != horse
                 print("Obsticle")
                 return False
         return True
