@@ -1,12 +1,15 @@
 class Movement:
     @staticmethod
-    def BasicMove(Type, colour, TestVector, TrueVector): # Pawn, King, Horse
+    def BasicMove(Type, colour, TestVector, TrueVector, PawnFirstMove=False): # Pawn, King, Horse
         if Type == "P":
             if colour == "White":
-                movelist = (0,-75)
+                movelist = [(0,-75)]
             else: 
-                movelist = (0,75)
-            if TrueVector == movelist:
+                movelist = [(0,75)]
+            
+            if PawnFirstMove:
+                movelist.append(tuple(map(lambda x : x*2 ,movelist[0])))
+            if TrueVector in movelist:
                 return True # Add kill move later when bothered
         elif Type == "K":
             movelist = [(75,75), (75,0), (0, 75)]

@@ -25,12 +25,14 @@ class Board:
                 return True
         return False
 
-    def isHorse(self, pos):
+    def checkType(self, pos):
         for piece in self.allPieces:
             if piece.getPos() == pos:
                 if piece.Type == "H":
-                    return True
-        return False
+                    return "H"
+                elif piece.Type == "P":
+                    return "P"
+        return None
     
     def getDirectionalVector(self, TrueVector):
         dirX = TrueVector[0]
@@ -108,6 +110,7 @@ class Board:
                         self.blackPieces.add(piece)
                     self.allPieces.add(piece)
   
+
     def validPath(self, PiecePos, moveToPos, TrueVector):
         dirX, dirY = self.getDirectionalVector((TrueVector))
         posX, posY = PiecePos
@@ -115,10 +118,10 @@ class Board:
         while (posX, posY) != moveToPos: # infinite loop breaks game
             posX += dirX 
             posY += dirY 
-            if (posX, posY) == moveToPos or self.isHorse(PiecePos):
+            if ((posX, posY) == moveToPos or self.checkType(PiecePos) == "H") and self.checkType(PiecePos) != "P":
                 return True
                 
-            if self.checkAtPos(self.allPieces, (posX, posY)): # and check if type != horse
+            if self.checkAtPos(self.allPieces, (posX, posY)): #checks the journey
                 print("Obsticle")
                 return False
         return True
@@ -174,7 +177,7 @@ class Board:
                     TestVector, TrueVector = self.getVector(choosenPiece.getPos(), moveToPos)
 
                     if not self.checkAtPos(pieceList, moveToPos): # check if own piece at the pos
-                        if choosenPiece.validMove(TestVector, TrueVector): # checks if the piece is able to move to the position
+                        if choosenPiece.validMove(TestVector, TrueVector): # checks if the piece is able to move to the positio
                             if self.validPath(choosenPiece.getPos(), moveToPos, TrueVector):
                                 return moveToPos
                             else:

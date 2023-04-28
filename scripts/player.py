@@ -13,4 +13,3 @@ class Player():
 
     def __getPos(): # checks if the location is valid and makes the move
         pass
-

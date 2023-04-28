@@ -29,9 +29,12 @@ class Pawn(Piece):
     def __init__(self, colour, pos, path, Type):
         super().__init__(colour, pos, path)
         self.Type = Type
+        self.FirstMove = True
     
     def validMove(self, TestVector, TrueVector):
-        validMove = Movement.BasicMove(self.Type, self.getcolour(), TestVector, TrueVector)
+        validMove = Movement.BasicMove(self.Type, self.getcolour(), TestVector, TrueVector, self.FirstMove)
+        if self.FirstMove and validMove:
+            self.FirstMove = False
         return validMove
 
 class Horse(Piece):
@@ -75,5 +78,3 @@ class King(Piece):
     def validMove(self, TestVector, TrueVector):
         validMove = Movement.BasicMove(self.Type, self.getcolour(), TestVector, TrueVector)
         return validMove
-        
-
