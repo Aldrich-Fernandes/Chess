@@ -1,6 +1,6 @@
 class Movement:
     @staticmethod
-    def BasicMove(Type, colour, TestVector, TrueVector, PawnFirstMove=False): # Pawn, King, Horse
+    def BasicMove(Type, colour, TestVector, TrueVector, PawnFirstMove=False, PawnAttacking=False): # Pawn, King, Horse
         if Type == "P":
             if colour == "White":
                 movelist = [(0,-75)]
@@ -9,6 +9,12 @@ class Movement:
             
             if PawnFirstMove:
                 movelist.append(tuple(map(lambda x : x*2 ,movelist[0])))
+            elif PawnAttacking:
+                if colour == "White":
+                    movelist.extend([(75, -75), (-75, -75)])
+                else:
+                    movelist.extend([(-75, 75), (75, 75)])
+
             if TrueVector in movelist:
                 return True # Add kill move later when bothered
         elif Type == "K":

@@ -31,8 +31,8 @@ class Pawn(Piece):
         self.Type = Type
         self.FirstMove = True
     
-    def validMove(self, TestVector, TrueVector):
-        validMove = Movement.BasicMove(self.Type, self.getcolour(), TestVector, TrueVector, self.FirstMove)
+    def validMove(self, TestVector, TrueVector, isAttacking):
+        validMove = Movement.BasicMove(self.Type, self.getcolour(), TestVector, TrueVector, self.FirstMove, isAttacking)
         if self.FirstMove and validMove:
             self.FirstMove = False
         return validMove

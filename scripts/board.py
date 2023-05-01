@@ -110,7 +110,6 @@ class Board:
                         self.blackPieces.add(piece)
                     self.allPieces.add(piece)
   
-
     def validPath(self, PiecePos, moveToPos, TrueVector):
         dirX, dirY = self.getDirectionalVector((TrueVector))
         posX, posY = PiecePos
@@ -151,8 +150,20 @@ class Board:
             else:
                 return None
 
-    def __upgradePiece(): # replaces the pawn with a queen.
-        pass
+    def __upgradePiece(self, piece): # replaces the pawn with a queen.
+        if piece.Type == "P":
+            if piece.getcolour() == "White" and piece.getPos()[1] == 0:
+                pos = piece.getPos()
+                piece.kill()
+                newPiece = Queen("White", (pos), r"Assets\QueenW.png")
+                self.whitePieces.add(newPiece)
+                self.allPieces.add(newPiece)
+            elif piece.getcolour() == "Black" and piece.getPos()[1] == 525:
+                pos = piece.getPos()
+                piece.kill()
+                newPiece = Queen("White", (pos), r"Assets\QueenB.png")
+                self.blackPieces.add(newPiece)
+                self.allPieces.add(newPiece)
 
     #MOVING PIECES
     def getChoosenPiece(self, player, pieceList):
@@ -165,7 +176,8 @@ class Board:
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = self.getSquareCord(pygame.mouse.get_pos())
-                    choosenPiece = player.choosePiece(pos, pieceList)
+                    choosenPiece = player.choosePiece(pos, pieceList)                   
+                    
         return choosenPiece
     
     def getMoveTo(self, choosenPiece, pieceList):
@@ -177,7 +189,21 @@ class Board:
                     TestVector, TrueVector = self.getVector(choosenPiece.getPos(), moveToPos)
 
                     if not self.checkAtPos(pieceList, moveToPos): # check if own piece at the pos
-                        if choosenPiece.validMove(TestVector, TrueVector): # checks if the piece is able to move to the positio
+                        if choosenPiece.Type == "P":
+                            if choosenPiece.getcolour() == "White":
+                                enemyList = self.blackPieces
+                            else:
+                                enemyList = self.whitePieces
+                                                        
+                            if self.checkAtPos(enemyList, moveToPos):
+                                isAttacking = True
+                            else:
+                                isAttacking = False
+                            
+                            if choosenPiece.validMove(TestVector, TrueVector, isAttacking):
+                                return moveToPos
+                            
+                        elif choosenPiece.validMove(TestVector, TrueVector): # checks if the piece is able to move to the positio
                             if self.validPath(choosenPiece.getPos(), moveToPos, TrueVector):
                                 return moveToPos
                             else:
@@ -209,3 +235,4 @@ class Board:
         choosenPiece.updatePos(moveToPos)
 
         self.__takePiece(player.getColour(), moveToPos)
+        self.__upgradePiece(choosenPiece)

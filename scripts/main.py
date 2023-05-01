@@ -28,7 +28,7 @@ while not Board.gameOver():
 
     player = Players[turn % 2]
     print(f"{player.getColour()}'s turn")
-    Board.run(player)        
+    Board.run(player)
         
     turn += 1
     Clock.tick(60)
