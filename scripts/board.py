@@ -123,7 +123,7 @@ class Board:
             if self.checkAtPos(self.allPieces, (posX, posY)): #checks the journey
                 print("Obsticle")
                 return False
-        return True
+        return False
             
     def gameOver(self):
         return self.__gameOver

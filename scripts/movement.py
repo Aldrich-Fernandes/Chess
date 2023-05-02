@@ -9,7 +9,9 @@ class Movement:
             
             if PawnFirstMove:
                 movelist.append(tuple(map(lambda x : x*2 ,movelist[0])))
-            elif PawnAttacking:
+            if PawnAttacking:
+                if TestVector[0] == 0:
+                    return False
                 if colour == "White":
                     movelist.extend([(75, -75), (-75, -75)])
                 else:
