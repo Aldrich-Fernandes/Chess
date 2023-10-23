@@ -3,7 +3,7 @@ from board import Board
 from player import Player
 
 pygame.init()
-Clock = pygame.time.Clock()
+Clock = pygame.time.Clock() #Test update
 
 BoardWidth = 600
 BoardHight = 600
