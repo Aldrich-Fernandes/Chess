@@ -176,7 +176,7 @@ class Board:
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = self.getSquareCord(pygame.mouse.get_pos())
-                    choosenPiece = player.choosePiece(pos, pieceList)                   
+                    choosenPiece = player.choosePiece(pos, pieceList)                 
                     
         return choosenPiece
     
@@ -227,11 +227,12 @@ class Board:
         else:
             pieceList = self.blackPieces
 
-        choosenPiece, moveToPos = None, None
-
-        while choosenPiece == None or moveToPos == None:
+        while True:
+            choosenPiece, moveToPos = None, None
             choosenPiece = self.getChoosenPiece(player, pieceList) #chooses only your own piece
             moveToPos = self.getMoveTo(choosenPiece, pieceList)#pos that  is not on own piece and is a valid move
+            if not (choosenPiece == None or moveToPos == None):
+                break
         choosenPiece.updatePos(moveToPos)
 
         self.__takePiece(player.getColour(), moveToPos)
