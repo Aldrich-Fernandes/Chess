@@ -1,4 +1,4 @@
-from piece import *
+from .pieces import *
 import pygame, sys
 
 
@@ -76,30 +76,30 @@ class Board:
                 pos = x*75 ,y*75
 
                 if lable == "P":
-                    piece = Pawn("White", (pos), r"Assets\PawnW.png", "P")
+                    piece = Pawn("White", (pos), "Assets/PawnW.png", "P")
                 elif lable == "R":
-                    piece = Rook("White", (pos), r"Assets\RookW.png")
+                    piece = Rook("White", (pos), "Assets/RookW.png")
                 elif lable == "H":
-                    piece = Horse("White", (pos), r"Assets\HorseW.png", "H")
+                    piece = Horse("White", (pos), "Assets/HorseW.png", "H")
                 elif lable == "B":
-                    piece = Bishop("White", (pos), r"Assets\BishopW.png")
+                    piece = Bishop("White", (pos), "Assets/BishopW.png")
                 elif lable == "Q":
-                    piece = Queen("White", (pos), r"Assets\QueenW.png")
+                    piece = Queen("White", (pos), "Assets/QueenW.png")
                 elif lable == "K":
-                    piece = King("White", (pos), r"Assets\KingW.png", "K")
+                    piece = King("White", (pos), "Assets/KingW.png", "K")
 
                 elif lable == "p":
-                    piece = Pawn("Black", (pos), r"Assets\PawnB.png", "P")
+                    piece = Pawn("Black", (pos), "Assets/PawnB.png", "P")
                 elif lable == "r":
-                    piece = Rook("Black", (pos), r"Assets\RookB.png")
+                    piece = Rook("Black", (pos), "Assets/RookB.png")
                 elif lable == "h":
-                    piece = Horse("Black", (pos), r"Assets\HorseB.png", "H")
+                    piece = Horse("Black", (pos), "Assets/HorseB.png", "H")
                 elif lable == "b":
-                    piece = Bishop("Black", (pos), r"Assets\BishopB.png")
+                    piece = Bishop("Black", (pos), "Assets/BishopB.png")
                 elif lable == "q":
-                    piece = Queen("Black", (pos), r"Assets\QueenB.png")
+                    piece = Queen("Black", (pos), "Assets/QueenB.png")
                 elif lable == "k":
-                    piece = King("Black", (pos), r"Assets\KingB.png", "K")
+                    piece = King("Black", (pos), "Assets/KingB.png", "K")
                 else:
                     piece = None
                 
@@ -155,13 +155,13 @@ class Board:
             if piece.getcolour() == "White" and piece.getPos()[1] == 0:
                 pos = piece.getPos()
                 piece.kill()
-                newPiece = Queen("White", (pos), r"Assets\QueenW.png")
+                newPiece = Queen("White", (pos), "Assets/QueenW.png")
                 self.whitePieces.add(newPiece)
                 self.allPieces.add(newPiece)
             elif piece.getcolour() == "Black" and piece.getPos()[1] == 525:
                 pos = piece.getPos()
                 piece.kill()
-                newPiece = Queen("White", (pos), r"Assets\QueenB.png")
+                newPiece = Queen("White", (pos), "Assets/QueenB.png")
                 self.blackPieces.add(newPiece)
                 self.allPieces.add(newPiece)
 
