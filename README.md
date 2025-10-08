@@ -56,7 +56,7 @@ python main.py
 
 ## Screenshots
 
-![Chess Board](Assets\screenshots\image.png)
+![Chess Board](Assets/screenshots/image.png)
 
 
 ## Controls
